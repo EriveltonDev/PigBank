@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #4d4d4d;
+}
+
+.react-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.react-modal-content {
+    width: 100%;
+    max-width: 500px;
+    background-color:white;
+    position: relative;
+    border-radius:1rem;
+}
+
+.deposito {
+    color: green;
+}
+
+.saque {
+    color: red;
+}

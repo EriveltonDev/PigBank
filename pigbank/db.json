@@ -1,0 +1,44 @@
+{
+  "transacoes": [
+    {
+      "id": 1,
+      "valor": 200,
+      "tipo": "Depósito"
+    },
+    {
+      "id": 2,
+      "valor": 1000,
+      "tipo": "Depósito"
+    },
+    {
+      "id": 3,
+      "valor": 12,
+      "tipo": "Depósito"
+    },
+    {
+      "id": 4,
+      "valor": 30,
+      "tipo": "Saque"
+    },
+    {
+      "id": 5,
+      "valor": 1000,
+      "tipo": "Saque"
+    },
+    {
+      "id": 6,
+      "valor": 800,
+      "tipo": "Depósito"
+    },
+    {
+      "id": 7,
+      "valor": 1000,
+      "tipo": "Saque"
+    },
+    {
+      "id": 8,
+      "valor": 10000,
+      "tipo": "Saque"
+    }
+  ]
+}
