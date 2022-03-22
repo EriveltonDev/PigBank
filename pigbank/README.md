@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm backend`
 
 Run the JSON Server simulating a backend.\
-Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+Open [http://localhost:5000/transacoes](http://localhost:5000/transacoes) to view it in the browser.
 
 ### `npm start`
 
