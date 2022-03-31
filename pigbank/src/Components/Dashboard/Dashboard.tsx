@@ -1,8 +1,9 @@
-import { Buttons, Container, Deposit, Fechar, Formulario, Formulario1, Infos, Withdraw } from "./style";
+import { Buttons, Container, Deposit, Infos, Withdraw } from "./style";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown, FaEyeSlash, FaEye, FaRegTimesCircle } from 'react-icons/fa'
 import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from 'react-modal'
+import { ModalComponent } from "../Modal/Modal";
 
 export function Dashboard() {
 
@@ -27,27 +28,27 @@ export function Dashboard() {
 
     console.log(dados);
 
+    const [openModalWithdraw, setOpenModalWithdraw] = useState(false);
     
-
-    const [showElement, setShowElement] = useState(true);
-
-    const [openModal, setOpenModal] = useState(false);
-    const [openModal1, setOpenModal1] = useState(false);
-
-    function handleOpenModal() {
-        setOpenModal(true);
+    function handleOpenModalWithdraw() {
+        setOpenModalWithdraw(true);
         setTipo('Saque');
-    }
-    function handleOpenModal1() {
-        setOpenModal1(true);
-        setTipo('Depósito')
     }
 
     function handleCloseModal() {
-        setOpenModal(false);
+        setOpenModalWithdraw(false);
     }
-    function handleCloseModal1() {
-        setOpenModal1(false);
+    
+
+    const [openModalDeposit, setOpenModalDeposit] = useState(false);
+
+    function handleOpenModalDeposit() {
+        setOpenModalDeposit(true);
+        setTipo('Depósito')
+    }
+
+    function handleCloseModalDeposit() {
+        setOpenModalDeposit(false);
     }
 
     const [depositosTotais, setDepositosTotais] = useState(0);
@@ -76,7 +77,7 @@ export function Dashboard() {
     function handleSubmitdeposit(event : FormEvent) {
         event.preventDefault();
 
-        handleCloseModal1();
+        handleCloseModalDeposit();
         window.location.reload();
 
 
@@ -120,9 +121,15 @@ export function Dashboard() {
         })
     }
 
+    function changeValue(value : number) {
+        setValor(value)
+    }
+
 
     const [valor, setValor] = useState(0);
     const [tipo, setTipo] = useState('');
+
+    const [showElement, setShowElement] = useState(true);
 
     return (
         <Container>
@@ -159,30 +166,28 @@ export function Dashboard() {
             </Infos>
 
             <Buttons>
-                <button onClick={handleOpenModal1}>Depositar</button>
+                <button onClick={handleOpenModalDeposit}>Depositar</button>
                 <Link to="/extrato">Extrato</Link>
-                <button onClick={handleOpenModal}>Sacar</button>
+                <button onClick={handleOpenModalWithdraw}>Sacar</button>
             </Buttons>
 
-            <Modal isOpen={openModal1} onRequestClose={handleCloseModal1} overlayClassName="react-modal-overlay"
-            className="react-modal-content" >
-                <Formulario1 onSubmit={handleSubmitdeposit}>
-                <Fechar onClick={handleCloseModal1}><FaRegTimesCircle/></Fechar>
-                    <label htmlFor='valor'>Digite o valor que você quer depositar</label>
-                    <input onChange={event => setValor(+event.target.value)}type="number" id="valor"/>
-                    <button type="submit">Depositar</button>
-                </Formulario1>
-            </Modal>
+            <ModalComponent
+            openModal={openModalWithdraw}
+            closeModal={handleCloseModal}
+            submit={handleSubmitwithdraw}
+            change={changeValue}
+            type={true}
+            >Sacar
+            </ModalComponent>
 
-            <Modal isOpen={openModal} onRequestClose={handleCloseModal} overlayClassName="react-modal-overlay"
-            className="react-modal-content" >
-                <Formulario onSubmit={handleSubmitwithdraw}>
-                    <Fechar onClick={handleCloseModal} ><FaRegTimesCircle/></Fechar>
-                    <label htmlFor='valor'>Digite o valor que você quer sacar</label>
-                    <input onChange={event => setValor(+event.target.value)} type="number" id="valor"/>
-                    <button type="submit">Sacar</button>
-                </Formulario>
-            </Modal>
+            <ModalComponent
+            openModal={openModalDeposit}
+            closeModal={handleCloseModalDeposit}
+            submit={handleSubmitdeposit}
+            change={changeValue}
+            type={false}
+            >Depositar
+            </ModalComponent>
         </Container>
     )
 }
