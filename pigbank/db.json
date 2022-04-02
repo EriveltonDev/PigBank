@@ -1,5 +1,14 @@
 {
   "transacoes": [
-    
+    {
+      "id": 1,
+      "valor": 200,
+      "tipo": "Depósito"
+    },
+    {
+      "id": 2,
+      "valor": 200,
+      "tipo": "Saque"
+    }
   ]
 }

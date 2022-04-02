@@ -1,32 +1,14 @@
 import { Buttons, Container, Deposit, Infos, Withdraw } from "./style";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown, FaEyeSlash, FaEye, FaRegTimesCircle } from 'react-icons/fa'
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from 'react-modal'
 import { ModalComponent } from "../Modal/Modal";
+import { GlobalContext } from "../UserContex/UserContex";
 
 export function Dashboard() {
 
-    interface TypeDados {
-        tipo:string;
-        id:number;
-        valor:number;
-    }
-    
-    const [dados, setDados] = useState<TypeDados[]>([]);
-    
-    useEffect(() => {
-        fetch('http://localhost:5000/transacoes', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => response.json())
-        .then(data => setDados(data))
-    }, [])
-
-    console.log(dados);
+    const dados = useContext(GlobalContext);
 
     const [openModalWithdraw, setOpenModalWithdraw] = useState(false);
     
@@ -35,7 +17,7 @@ export function Dashboard() {
         setTipo('Saque');
     }
 
-    function handleCloseModal() {
+    function handleCloseModalWithdraw() {
         setOpenModalWithdraw(false);
     }
     
@@ -101,7 +83,7 @@ export function Dashboard() {
     function handleSubmitwithdraw(event : FormEvent) {
         event.preventDefault();
 
-        handleCloseModal();
+        handleCloseModalWithdraw();
         window.location.reload();
 
         const id = dados.length + 1;
@@ -128,7 +110,6 @@ export function Dashboard() {
 
     const [valor, setValor] = useState(0);
     const [tipo, setTipo] = useState('');
-
     const [showElement, setShowElement] = useState(true);
 
     return (
@@ -173,7 +154,7 @@ export function Dashboard() {
 
             <ModalComponent
             openModal={openModalWithdraw}
-            closeModal={handleCloseModal}
+            closeModal={handleCloseModalWithdraw}
             submit={handleSubmitwithdraw}
             change={changeValue}
             type={true}
