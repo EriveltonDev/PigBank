@@ -1,27 +1,15 @@
 import { Link } from "react-router-dom"
 import { Buttons, Container, Table } from "./style"
 import {FaHome} from 'react-icons/fa'
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../UserContex/UserContex";
+import { calc } from "../../Transactions/Calc";
 
 export function Extrato() {
 
     const dados = useContext(GlobalContext);
-    const [saldoAtual, setSaldoAtual] = useState(0);
+    const values = calc(dados);
 
-    useEffect(() => {
-        let totalDepositos = 0;
-        let totalSaques = 0;
-        for (let i = 0; i < dados.length; i++) {
-            if (dados[i].tipo === 'Depósito') {
-                totalDepositos += dados[i].valor;
-            } else {
-                totalSaques += dados[i].valor;
-            }
-        }
-        setSaldoAtual(totalDepositos - totalSaques);
-    }, [dados]);
-    
     return (
         <Container>
 
@@ -47,7 +35,7 @@ export function Extrato() {
                 <tfoot>
                     <tr>
                         <td>Saldo Total</td>
-                        <td>{saldoAtual},00</td>
+                        <td>{values.saldoAtual},00</td>
                     </tr>
                 </tfoot>
             </Table>
