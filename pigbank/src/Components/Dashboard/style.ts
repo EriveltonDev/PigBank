@@ -103,7 +103,7 @@ export const Buttons = styled.section`
         background-color: #dcefe4 ;
     }
 
-    button:last-child {
+    button:nth-child(3) {
         color: red;
         background-color: #ffd9cc;
     }

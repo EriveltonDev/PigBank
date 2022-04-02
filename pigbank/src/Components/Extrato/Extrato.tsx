@@ -1,35 +1,13 @@
 import { Link } from "react-router-dom"
 import { Buttons, Container, Table } from "./style"
 import {FaHome} from 'react-icons/fa'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../UserContex/UserContex";
 
 export function Extrato() {
 
-    interface TypeDados {
-        tipo:string;
-        id:number;
-        valor:number;
-    }
-    
-    const [dados, setDados] = useState<TypeDados[]>([]);
-    
-    useEffect(() => {
-        fetch('http://localhost:5000/transacoes', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(response => response.json())
-        .then(data => setDados(data))
-    }, [])
-
-    const [depositosTotais, setDepositosTotais] = useState(0);
-    const [saquesTotais, setSaquesTotais] = useState(0);
+    const dados = useContext(GlobalContext);
     const [saldoAtual, setSaldoAtual] = useState(0);
-
-
-    
 
     useEffect(() => {
         let totalDepositos = 0;
@@ -42,8 +20,6 @@ export function Extrato() {
             }
         }
         setSaldoAtual(totalDepositos - totalSaques);
-        setSaquesTotais(totalSaques);
-        setDepositosTotais(totalDepositos);
     }, [dados]);
     
     return (

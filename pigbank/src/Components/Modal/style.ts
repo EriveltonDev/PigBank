@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface TypeProps {
-    type:boolean;
+    type: string;
 }
 
 export const Formulario = styled.form`
@@ -31,9 +31,9 @@ export const Formulario = styled.form`
     }
     
     button {
-        color: ${(props : TypeProps) => (props.type ? 'red' : '#48a36d')};
+        color: ${(props : TypeProps) => (props.type === 'Saque' ? 'red' : '#48a36d')};
         border: none;
-        background-color: ${(props : TypeProps) => (props.type ? '#ffd9cc' : '#dcefe4')};
+        background-color: ${(props : TypeProps) => (props.type === 'Saque' ? '#ffd9cc' : '#dcefe4')};
         padding: 1rem 2rem;
         border-radius: 1rem;
         font-weight: bold;

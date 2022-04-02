@@ -1,14 +1,16 @@
 import { Buttons, Container, Deposit, Infos, Withdraw } from "./style";
 import { FaArrowAltCircleUp, FaArrowAltCircleDown, FaEyeSlash, FaEye, FaRegTimesCircle } from 'react-icons/fa'
-import { FormEvent, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import Modal from 'react-modal'
 import { ModalComponent } from "../Modal/Modal";
 import { GlobalContext } from "../UserContex/UserContex";
+import { calc } from "../../Transactions/Calc";
 
 export function Dashboard() {
-
+    const [tipo, setTipo] = useState('');
+    const [showElement, setShowElement] = useState(true);
     const dados = useContext(GlobalContext);
+    const values = calc(dados);
 
     const [openModalWithdraw, setOpenModalWithdraw] = useState(false);
     
@@ -33,85 +35,6 @@ export function Dashboard() {
         setOpenModalDeposit(false);
     }
 
-    const [depositosTotais, setDepositosTotais] = useState(0);
-    const [saquesTotais, setSaquesTotais] = useState(0);
-    const [saldoAtual, setSaldoAtual] = useState(0);
-
-
-    
-
-    useEffect(() => {
-        let totalDepositos = 0;
-        let totalSaques = 0;
-        for (let i = 0; i < dados.length; i++) {
-            if (dados[i].tipo === 'Depósito') {
-                totalDepositos += dados[i].valor;
-            } else {
-                totalSaques += dados[i].valor;
-            }
-        }
-        setSaldoAtual(totalDepositos - totalSaques);
-        setSaquesTotais(totalSaques);
-        setDepositosTotais(totalDepositos);
-    }, [dados])
-
-
-    function handleSubmitdeposit(event : FormEvent) {
-        event.preventDefault();
-
-        handleCloseModalDeposit();
-        window.location.reload();
-
-
-        const id = dados.length + 1;
-
-        const data = {
-            id,
-            valor,
-            tipo,
-        };
-
-        fetch('http://localhost:5000/transacoes', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-    }
-
-    function handleSubmitwithdraw(event : FormEvent) {
-        event.preventDefault();
-
-        handleCloseModalWithdraw();
-        window.location.reload();
-
-        const id = dados.length + 1;
-
-        const data = {
-            id,
-            valor,
-            tipo,
-        };
-
-        fetch('http://localhost:5000/transacoes', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-    }
-
-    function changeValue(value : number) {
-        setValor(value)
-    }
-
-
-    const [valor, setValor] = useState(0);
-    const [tipo, setTipo] = useState('');
-    const [showElement, setShowElement] = useState(true);
-
     return (
         <Container>
             <Infos>
@@ -124,7 +47,7 @@ export function Dashboard() {
                             </a>
                         </span>
                     </div>
-                    { showElement ? <p id="total">{saldoAtual},00</p> : null}
+                    { showElement ? <p id="total">{values.saldoAtual},00</p> : null}
                 </section>
                 
                 <section>
@@ -132,7 +55,7 @@ export function Dashboard() {
                         <h2>Depositado</h2>
                         <span><FaArrowAltCircleUp/></span>
                     </Deposit>
-                    <p>{depositosTotais},00</p>
+                    <p>{values.depositosTotais},00</p>
                 </section>
                
                 <section>
@@ -140,7 +63,7 @@ export function Dashboard() {
                         <h2>Sacado</h2>
                         <span><FaArrowAltCircleDown/></span>
                     </Withdraw>
-                    <p>{saquesTotais},00</p>
+                    <p>{values.saquesTotais},00</p>
                 </section>
 
 
@@ -150,23 +73,20 @@ export function Dashboard() {
                 <button onClick={handleOpenModalDeposit}>Depositar</button>
                 <Link to="/extrato">Extrato</Link>
                 <button onClick={handleOpenModalWithdraw}>Sacar</button>
+                <button>Zerar</button>
             </Buttons>
 
             <ModalComponent
-            openModal={openModalWithdraw}
-            closeModal={handleCloseModalWithdraw}
-            submit={handleSubmitwithdraw}
-            change={changeValue}
-            type={true}
+                openModal={openModalWithdraw}
+                closeModal={handleCloseModalWithdraw}
+                type={tipo}
             >Sacar
             </ModalComponent>
 
             <ModalComponent
-            openModal={openModalDeposit}
-            closeModal={handleCloseModalDeposit}
-            submit={handleSubmitdeposit}
-            change={changeValue}
-            type={false}
+                openModal={openModalDeposit}
+                closeModal={handleCloseModalDeposit}
+                type={tipo}
             >Depositar
             </ModalComponent>
         </Container>
