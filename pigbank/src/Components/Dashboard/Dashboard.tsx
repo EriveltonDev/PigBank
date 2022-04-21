@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ModalComponent } from "../Modal/Modal";
 import { GlobalContext } from "../UserContex/UserContex";
 import { calc } from "../../Transactions/Calc";
+import { zerarDB } from "../../Transactions/Transactions";
 
 export function Dashboard() {
     const [tipo, setTipo] = useState('');
@@ -33,6 +34,11 @@ export function Dashboard() {
 
     function handleCloseModalDeposit() {
         setOpenModalDeposit(false);
+    }
+
+    function zerar() {
+        zerarDB(dados.length);
+        window.location.reload();
     }
 
     return (
@@ -73,7 +79,7 @@ export function Dashboard() {
                 <button onClick={handleOpenModalDeposit}>Depositar</button>
                 <Link to="/extrato">Extrato</Link>
                 <button onClick={handleOpenModalWithdraw}>Sacar</button>
-                <button>Zerar</button>
+                <button onClick={zerar} >Zerar</button>
             </Buttons>
 
             <ModalComponent

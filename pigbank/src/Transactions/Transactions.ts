@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { GlobalContext } from "../Components/UserContex/UserContex";
+
 export function takeDeposit(data : Object) {
     fetch('http://localhost:5000/transacoes', {
             method: 'POST',
@@ -16,4 +19,18 @@ export function takeWithdraw(data : Object) {
             },
             body: JSON.stringify(data)
     })
+}
+
+
+export function zerarDB(props : number) {
+
+    for (let i = 1; i <= props; i++) {
+        fetch('http://localhost:5000/transacoes/' + i, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+        })
+    }
+
 }

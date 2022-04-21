@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 interface TypeDados {
     tipo:string;
@@ -9,7 +9,7 @@ interface TypeDados {
 export const GlobalContext = createContext<TypeDados[]>([]);
 
 interface TypeProps {
-    children: any; // verificar tipagem
+    children: ReactNode;
 }
 
 export function GlobalStorage(props : TypeProps) {

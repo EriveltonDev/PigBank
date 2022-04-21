@@ -7,7 +7,7 @@ import { Fechar, Formulario } from './style';
 
 interface TypeProps {
     openModal: boolean;
-    closeModal: any; // colocar tipagem certa depois
+    closeModal: () => void;
     children: string;
     type: string;
 }
