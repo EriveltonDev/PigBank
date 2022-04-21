@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { GlobalContext } from "../Components/UserContex/UserContex";
-
 export function takeDeposit(data : Object) {
     fetch('http://localhost:5000/transacoes', {
             method: 'POST',

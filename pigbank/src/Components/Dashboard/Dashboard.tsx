@@ -38,7 +38,7 @@ export function Dashboard() {
 
     function zerar() {
         zerarDB(dados.length);
-        window.location.reload();
+        setTimeout(() => {window.location.reload()}, 1000)
     }
 
     return (
